@@ -72,7 +72,9 @@ def logout():
     session.pop('username', None)
     return redirect('/')
 
-
+@app.route('/about')
+def about():
+    return render_template('about.html', appname=APP_NAME)
 
 #home
 @app.route('/')
@@ -80,7 +82,7 @@ def home():
     if 'username' in session:
         return render_template('index.html', logged_in=True)
     else:
-        return render_template('index.html', logged_in=False, app_name=APP_NAME)
+        return render_template('index.html', logged_in=False, appname=APP_NAME)
 
 
 
