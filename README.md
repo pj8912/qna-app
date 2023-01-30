@@ -1,7 +1,7 @@
 # qna-app
 qna app built using Flask and MySQL
 
-[![Python](https://shields.io/static/v1?label=python&message=3.10.6&color=green)]
+![Python](https://shields.io/static/v1?label=python&message=3.10.6&color=green)
 
 ## Prerequisites
 Before you start using the app, you need to have the following installed on your machine:
