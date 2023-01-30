@@ -14,7 +14,7 @@ Before you start using the app, you need to have the following installed on your
 
 1.Clone the repository
 
-`git clone https://github.com/[your-username]/flask-mysql-qna-app.git`
+`git clone https://github.com/pj8912/qna-app.git`
 
 2.Create a virtual environment
 `python3 -m venv env`
