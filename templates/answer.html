@@ -1,0 +1,26 @@
+{% extends 'wrapper.html' %}
+{% block title %}Answer{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card card-body mt-5 m-auto col-md-6">
+        <form action="/upload-answer" method="POST">
+
+            <div class="mb-2">
+                <textarea name="answer" class="form-control" placeholder="Your Answer" cols="30" rows="10"></textarea>
+                <input type="hidden" name="qid" value="{{ qid }}">
+                <input type="hidden" name="question" value="{{ question }}">
+
+            </div>
+            <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-success">Upload Answer</button>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+{% endblock %}

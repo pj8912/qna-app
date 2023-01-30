@@ -1,6 +1,5 @@
-
 {% extends 'wrapper.html' %}
-{% block title %}Home{% endblock %}
+{% block title %}Qna{% endblock %}
 
 {% block content %}
 
@@ -8,8 +7,25 @@
 <div class="container">
 {% if logged_in %}
 
-	<a href="/logout">Logout</a>
-	<a href="/ask">Ask Question</a>
+	<p class="mt-5">
+
+		<a href="/ask" class=" p-2" style="border-radius:20px;text-decoration: none;color:white;background: #A82400;">Ask Question</a>
+	</p>
+<hr>
+	<div class="questions col-md-6">
+		{% if questions|length < 1 %}
+			<p>No questions available</p>
+		{% else %}
+			{% for question in questions %} 
+				{% set q =  question[1].replace(" ", "-")  %}
+				{% set qq = q|urlencode %}
+				<div class="card p-3 mt-3">
+
+					<a style="text-decoration: none;" href="/question/{{ question[0] }}/{{ qq }}">{{ question[1] }}</a>
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
 {% else  %}
 
 	<div class="card card-body mt-5 col-md-4 m-auto">

@@ -1,0 +1,20 @@
+{% extends 'wrapper.html' %}
+{% block title %}Ask Question{% endblock %}
+
+{% block content %}
+<div class="container">
+    
+    <div class="card card-body mt-5 m-auto col-md-6">
+    <form action="/uploadq" method="post">
+        <div class="mb-2">
+            <textarea name="question" cols="30" rows="10" class="form-control" placeholder="Your Question?"></textarea>
+        </div>
+        <div class="d-grid gap-2">
+            <button class="btn btn-default" style="background: #A82400;color:white" type="submit">Upload Question</button>
+        </div>
+    </form>
+</div>
+</div>
+
+
+{% endblock %}
