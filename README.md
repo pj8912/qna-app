@@ -1,6 +1,7 @@
 # qna-app
 qna app built using Flask and MySQL
 
+[![Flask](2.2.2)]
 
 ## Prerequisites
 Before you start using the app, you need to have the following installed on your machine:
