@@ -48,6 +48,6 @@ Before you start using the app, you need to have the following installed on your
 - Answer questions
 - View questions and answers
 
-## Contributers
+## Contributors
 
 - [jp](https://github.com/pj8912)
