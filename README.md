@@ -47,3 +47,7 @@ Before you start using the app, you need to have the following installed on your
 - Ask questions
 - Answer questions
 - View questions and answers
+
+## Contributers
+
+- [jp](https://github.com/pj8912)
