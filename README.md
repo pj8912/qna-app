@@ -39,7 +39,9 @@ Before you start using the app, you need to have the following installed on your
 
 6.Run app
 
-`python app.py`
+```
+python app.py
+```
 
 
 ## Features
