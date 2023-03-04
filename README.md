@@ -15,18 +15,26 @@ Before you start using the app, you need to have the following installed on your
 
 1.Clone the repository
 
-`git clone https://github.com/pj8912/qna-app.git`
+```
+git clone https://github.com/pj8912/qna-app.git
+```
 
 2.Create a virtual environment
-`python3 -m venv env`
+```
+python3 -m venv myenv
+```
 
-`source env/bin/activate`
+```
+source myenv/bin/activate
+```
 
 
 3.Install the requirements
-`pip install -r requirements.txt`
+```
+pip install -r requirements.txt
+```
 
-4.Create .env file and add values for the following
+4.Create `.env` file and add values for the following
 
 - DB_HOST=YOUR_DB_HOST
 - DB_USERNAME=YOUR_DB_USERNAME
