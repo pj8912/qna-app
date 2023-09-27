@@ -9,7 +9,7 @@ Before you start using the app, you need to have the following installed on your
 - Python 3
 - Flask
 - MySQL
-
+- Gunicorn(server)
 
 ## Installation
 
@@ -48,7 +48,7 @@ pip install -r requirements.txt
 - Run app
 
 ```
-python app.py
+gunicorn --bind 0.0.0.0:5000 wsgi:app
 ```
 
 

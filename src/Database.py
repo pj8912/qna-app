@@ -1,6 +1,7 @@
 import mysql.connector
 from dotenv import load_dotenv
 load_dotenv()
+
 class Database:
   def __init__(self):
     self.HOST = os.environ.get("DB_HOST")
@@ -11,4 +12,12 @@ class Database:
     #create connection
     self.cnx = mysql.connector.connect(user=USERNAME,password=PWD,host=HOST, database=DBNAME)
     self.cursor = cnx.cursor()
-    
+
+
+
+
+
+# instance
+# db= Database()
+# cnx = db.cnx
+# cursor = db.cursor
