@@ -6,28 +6,34 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import urllib.parse
 
 
+from src.Models.Question import Question
+
+
+
 
 load_dotenv()
 app = Flask(__name__) #Flask app
 app.secret_key = 'YOUR_SECRET_KEY'
-#DB config
+
+
+# ========== MYSQL DB CONFIGURAION ==================
 HOST = os.environ.get("DB_HOST")
 USERNAME = os.environ.get("DB_USERNAME")
 PWD = os.environ.get("DB_PWD")
 DBNAME = os.environ.get("DB_NAME")
 
+#  ========= APP NAME =================
 APP_NAME = os.environ.get("APP_NAME")
 
 
-
-
-#mysqlconnection
+# ========== MYSQL CONNECTION ==============
 cnx = mysql.connector.connect(user=USERNAME, password=PWD, host=HOST, database=DBNAME)
 cursor = cnx.cursor()
 
+#  ========= QUESTION INSTANCE ================
+question_ = Question(cursor,cnx)
 
-
-#register user
+# ========== SIGN UP ==========
 @app.route('/signup', methods=['POST'])
 def signup():
     if request.method == 'POST':
@@ -50,7 +56,7 @@ def signup():
     return render_template('signup.html')
 
 
-#login
+# ========== LOG IN ==========
 @app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
@@ -70,12 +76,13 @@ def login():
     return render_template('/')
 
 
-#logout
+#  ========== LOGOUT ==========
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     return redirect('/')
 
+#  ========== ABOUT PAGE  ==========
 @app.route('/about')
 def about():
     if 'username' in session:
@@ -83,8 +90,7 @@ def about():
     else:
         return render_template('about.html', appname=APP_NAME, logged_in=False)
 
-
-#home
+#  ========== HOME PAGE  ==========
 @app.route('/')
 def home():
     if 'username' in session:
@@ -96,7 +102,7 @@ def home():
 
 
 
-#signup form
+# ========== REGISTRATION PAGE ==========
 @app.route('/register')
 def register():
      if 'username' in session:
@@ -104,8 +110,7 @@ def register():
      else:
         return render_template('signup.html', appname=APP_NAME)
 
-
-#ask
+# ========== UPLOAD QUESTION PAGE ==========
 @app.route('/ask')
 def ask():   
     if 'username' in session:
@@ -113,7 +118,7 @@ def ask():
     else:
         return redirect('/')
 
-#upload question
+# ========== UPLOAD QUESTION ==========
 @app.route('/uploadq', methods=['POST'])
 def upload_question():
     if 'username' in session:
@@ -124,10 +129,25 @@ def upload_question():
             cnx.commit()
             return redirect('/')
     else:
-        return redirect('/')        
+        return redirect('/') 
 
 
-#profile
+# ========== UPDATE QUESTION PAGE ==========
+@app.route('/q/update/<int:qid>')
+def update_question_page(qid):
+    questions = question_.get_question(qid)
+    return render_template('update_q.html', qid=qid, logged_in=True, uname=session['username'], questions=questions)
+
+# ========== UPDATE QUESTION ==========
+@app.route('/update/question', methods=['POST'])
+def update_question():
+    qid = request.form['qid']
+    question = request.form['question']
+    question_.update_question(question,qid)
+    return redirect('/')
+
+
+# ========== VIEW PROFILE ==========
 @app.route('/profile')
 def profile():
     if 'username' in session:
@@ -139,8 +159,7 @@ def profile():
     else:
         return redirect('/')
 
-
-#view question and related answers
+# ========== VIEW QUESTION AND RELATED ANSWER ==========
 @app.route('/question/<int:id>/<string:qu>')
 def question(id, qu):
     if 'username' in session:
@@ -151,7 +170,7 @@ def question(id, qu):
     else:
         return redirect('/')
 
-#add answer page
+# ========== ADD ANSWER PAGE ==========
 @app.route('/add-answer/<int:q_id>/<string:question>')
 def add_answer(q_id, question):
     if 'username' in session:
@@ -160,9 +179,7 @@ def add_answer(q_id, question):
     else:
         return redirect('/')
     
-
-
-#upload answer
+# ============ UPLOAD ANSWER ====================
 @app.route('/upload-answer', methods=['POST'])
 def upload_answer():
     if 'username' in session:
@@ -179,7 +196,7 @@ def upload_answer():
         return redirect('/')
 
 
-#delete answer
+# ==================== DELETE ANSWER ====================
 @app.route('/answer/delete/<int:aid>')
 def delete_answer(aid):
     if 'username' in session:
@@ -187,7 +204,19 @@ def delete_answer(aid):
         return redirect('/profile')
     else:
         return redirect('/')
+    
 
+# ==================== DELETE QUESTION ====================
+@app.route('/delete/question/<int:qid>')
+def delete_question(qid):
+    if 'username' in session:
+        cursor.execute("DELETE FROM answers WHERE q_id=%s", (qid,))
+        cnx.commit()
+        cursor.execute("DELETE FROM questions WHERE qid=%s", (qid,))
+        cnx.commit()
+        return redirect('/profile')
+    else:
+        return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)

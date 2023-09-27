@@ -32,4 +32,53 @@ CREATE TABLE answers(
 );
 
 
+CREATE TABLE IF NOT EXISTS vote_questions(
+	vqid INT auto_increment primary key not null,
+	q_id int NOT null,
+	user_id  int NOT null,
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (q_id) REFERENCES  questions(qid),
+	FOREIGN KEY (user_id) REFERENCES  users(user_id),
+);
+
+CREATE TABLE IF NOT EXISTS vote_answers(
+	aqid INT auto_increment primary key not null,
+	a_id int NOT null,
+	user_id  int NOT null,
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (a_id) REFERENCES  answers(aid),
+	FOREIGN KEY (user_id) REFERENCES  users(user_id),
+
+);
+
+CREATE TABLE IF NOT EXISTS useful_answers(
+	ua_id INT auto_increment primary KEY NOT null,
+	answer_id INT NOT null,
+	user_id INT not  null,
+	created_date datetime default current_timestamp,
+	FOREIGN KEY user_id REFERENCES users(user_id),
+	FOREIGN KEY answer_id REFERENCES answers(aid)
+);
+
+
+CREATE TABLE IF NOT EXISTS save_questions(
+	sa_qid INT auto_increment primary KEY NOT null,
+	q_id INT NOT null,
+	user_id INT not  null,
+	created_date datetime default current_timestamp,
+	FOREIGN KEY (q_id) REFERENCES  questions(qid),
+	FOREIGN KEY answer_id REFERENCES answers(aid)
+);
+
+
+CREATE TABLE IF NOT EXISTS save_answers(
+	sa_aid INT auto_increment primary KEY NOT null,
+	a_id INT NOT null,
+	user_id INT not  null,
+	created_date datetime default current_timestamp,
+	FOREIGN KEY user_id REFERENCES users(user_id),
+	FOREIGN KEY a_id REFERENCES answers(aid)
+);
+
+
 

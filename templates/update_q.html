@@ -1,0 +1,26 @@
+{% extends 'wrapper.html' %}
+
+{% block title %}Update Question{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card card-body mt-5 m-auto col-md-6">
+        <h2>Update Question</h2>
+        {% for question in questions %}
+        <form action="/update/question" method="post">
+            <div class="mb-2">
+                <textarea name="question"  id="" cols="20" rows="5" class="form-control">{{question[1]}}</textarea>
+            </div>
+            <input type="hidden" name="qid" value="{{question[0]}}">
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}
